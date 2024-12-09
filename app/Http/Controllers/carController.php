@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use Illuminate\Http\Request;
 
 class carController extends Controller
@@ -11,7 +12,19 @@ class carController extends Controller
      */
     public function index()
     {
+        //select all cars
+
+        $cars = Car::get() ;
         return view('car.index');
+
+        //select published cars
+
+        $cars = Car::where('published_at','!=', null)->get();
+
+        //select the first car
+
+        $car = Car::where('published_at', '!=', null)->first();
+
     }
 
     /**
@@ -33,7 +46,7 @@ class carController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Car $car)
     {
         return view('car.show');
     }
@@ -41,7 +54,7 @@ class carController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Car $car)
     {
         return view('car.edit');
     }
@@ -49,7 +62,7 @@ class carController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Car $car)
     {
         //
     }
@@ -57,7 +70,7 @@ class carController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Car $car)
     {
         //
     }
