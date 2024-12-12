@@ -14,17 +14,16 @@ class carController extends Controller
     {
         //select all cars
 
-        $cars = Car::get() ;
+        $cars = Car::get();
         return view('car.index');
 
         //select published cars
 
-        $cars = Car::where('published_at','!=', null)->get();
+        $cars = Car::where('published_at', '!=', null)->get();
 
         //select the first car
 
         $car = Car::where('published_at', '!=', null)->first();
-
     }
 
     /**
@@ -38,17 +37,14 @@ class carController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.
      */
     public function show(Car $car)
     {
-        return view('car.show');
+        return view('car.show', ['car'=>$car]);
     }
 
     /**
@@ -74,7 +70,16 @@ class carController extends Controller
     {
         //
     }
-    public function search(){
-        return view('car.search');
+    public function search()
+    {
+
+        $query = Car::where('published_at', '<', now())
+            ->orderBy('published_at', 'desc');
+
+        $carCount = $query->count();
+
+        $cars = $query->limit(30)->get();
+
+        return view('car.search', ['cars' => $cars, 'carCount' => $carCount]);
     }
 }
