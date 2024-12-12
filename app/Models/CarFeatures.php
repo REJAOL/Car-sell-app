@@ -24,7 +24,7 @@ class CarFeatures extends Model
         'bluetooth_connectivity',
         'remote_start',
         'gps_navigation',
-        'heater_seats',
+        'heated_seats',
         'climate_control',
         'rear_parking_sensors',
         'leather_seats'
