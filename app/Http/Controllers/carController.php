@@ -3,27 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class carController extends Controller
+class CarController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //select all cars
-
-        $cars = Car::get();
-        return view('car.index');
-
-        //select published cars
-
-        $cars = Car::where('published_at', '!=', null)->get();
-
-        //select the first car
-
-        $car = Car::where('published_at', '!=', null)->first();
+        $cars = User::find(1)
+            ->cars()
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('car.index', ['cars'=>$cars]);
     }
 
     /**
@@ -44,7 +38,7 @@ class carController extends Controller
      */
     public function show(Car $car)
     {
-        return view('car.show', ['car'=>$car]);
+        return view('car.show', ['car' => $car]);
     }
 
     /**
